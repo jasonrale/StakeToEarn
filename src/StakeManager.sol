@@ -10,7 +10,7 @@ import {IKK} from "./IKK.sol";
  * Stake $ETH to earn $KK
  */
 contract StakeManager is Ownable {
-    IKK public kk;
+    address public kk;
 
     // reward amount per block
     uint256 public rewardRate;
@@ -34,7 +34,7 @@ contract StakeManager is Ownable {
     mapping(address account => uint256) public stakedbBalance;
 
     constructor(address _owner, address _kk, uint256 _rewardRate, uint256 _endBlockNumber) Ownable(_owner) {
-        kk = IKK(_kk);
+        kk = _kk;
         rewardRate = _rewardRate;
         endBlockNumber = _endBlockNumber;
     }
@@ -72,7 +72,7 @@ contract StakeManager is Ownable {
         uint256 rewardAmount = pendingRewards[msgSender];
         if (rewardAmount > 0) {
             pendingRewards[msgSender] = 0;
-            kk.mint(msgSender, rewardAmount);
+            IKK(kk).mint(msgSender, rewardAmount);
         }
     }
 
