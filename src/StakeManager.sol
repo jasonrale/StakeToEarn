@@ -48,7 +48,6 @@ contract StakeManager is Ownable {
             pendingRewards[msgSender] += stakedbBalance[msgSender] * (accumRewardPerETH - userRewardPerETH[msgSender]);
             userRewardPerETH[msgSender] = accumRewardPerETH;
         }
-        
         _;
     }
 
@@ -86,7 +85,7 @@ contract StakeManager is Ownable {
         endBlockNumber = _endBlockNumber;
     }
 
-    function rewardPerToken() internal view returns(uint256) {
+    function rewardPerToken() public view returns(uint256) {
         if (totalStaked == 0) {
             return accumRewardPerETH;
         }
